@@ -1,4 +1,5 @@
 part of rollbar;
+import 'dart:convert';
 
 class RollbarRequest {
   String _accessToken;
@@ -9,7 +10,7 @@ class RollbarRequest {
   RollbarRequest(this._accessToken, this._data, this._logger, this._client);
 
   Future<Response> send() {
-    var json = JSON.encode({"access_token": _accessToken, "data": _data});
+    var json = json.encode({"access_token": _accessToken, "data": _data});
 
     var request = _client.post("https://api.rollbar.com/api/1/item/",
         headers: {"Content-Type": "application/json"},
