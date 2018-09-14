@@ -6,6 +6,6 @@ authors:
 description: A package for logging application errors and messages to Rollbar.
 homepage: http://www.github.com/Mixbook/rollbar.dart
 dependencies:
-  stack_trace: '>=1.0.2 <2.0.0'
+  stack_trace: '>=1.0.2'
   logging: '>=0.9.1'
   http: '>=0.11.1'
