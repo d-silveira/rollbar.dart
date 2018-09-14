@@ -2,7 +2,7 @@ part of rollbar;
 
 class RollbarRequest {
   String _accessToken;
-  Map<String, Object> _data;
+  Map<dynamic, dynamic> _data;
   Logger _logger;
   Client _client;
 

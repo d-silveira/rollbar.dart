@@ -87,7 +87,7 @@ class Rollbar {
     return errors.stream;
   }
 
-  Map<String, Object> _generatePayloadData(Map body, Map otherData) {
+  Map<dynamic, dynamic> _generatePayloadData(Map body, Map otherData) {
     var data = {
       "body": body,
       "timestamp": new DateTime.now().millisecondsSinceEpoch / 1000,
