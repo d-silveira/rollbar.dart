@@ -1,4 +1,3 @@
-part of rollbar;
 import 'dart:convert';
 
 class RollbarRequest {
