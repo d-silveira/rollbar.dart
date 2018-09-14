@@ -2,11 +2,11 @@ part of rollbar;
 
 class Rollbar {
   String _accessToken;
-  Map<String, Object> _config;
+  Map<dynamic, dynamic> _config;
   Logger _logger;
   Client _client;
 
-  Rollbar(this._accessToken, String environment, {Map<String, Object> config, Logger logger, Client client}) {
+  Rollbar(this._accessToken, String environment, {Map<dynamic, dynamic> config, Logger logger, Client client}) {
     _logger = logger != null ? logger : _defaultLogger;
     _client = client != null ? client : new IOClient();
 
@@ -20,7 +20,7 @@ class Rollbar {
     });
   }
 
-  Future<Response> trace(Object error, StackTrace stackTrace, {Map<String, Object> otherData}) {
+  Future<Response> trace(Object error, StackTrace stackTrace, {Map<dynamic, dynamic> otherData}) {
     var body = {
       "trace": {
         "frames": new Trace.from(stackTrace).frames.map((frame) {
@@ -42,7 +42,7 @@ class Rollbar {
     return new RollbarRequest(_accessToken, data, _logger, _client).send();
   }
 
-  Future<Response> message(String messageBody, {Map<String, Object> metadata, Map<String, Object> otherData}) {
+  Future<Response> message(String messageBody, {Map<dynamic, dynamic> metadata, Map<dynamic, dynamic> otherData}) {
     var body = {
       "message": {
         "body": messageBody
@@ -68,7 +68,7 @@ class Rollbar {
   /// each error reported to Rollbar. The futures can be used to listen for completion
   /// or errors while calling the Rollbar API. The stream will also contain any uncaught
   /// errors originating from the zone. Use [Stream.handleError] to process these errors.
-  Stream<Future<Response>> traceErrorsInZone(body(), {Map<String, Object> otherData(error, StackTrace trace)}) {
+  Stream<Future<Response>> traceErrorsInZone(body(), {Map<dynamic, dynamic> otherData(error, StackTrace trace)}) {
     var errors = new StreamController.broadcast();
 
     runZoned(body, onError: (error, stackTrace) {
