@@ -1,4 +1,9 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:html';
+
+import 'package:http/http.dart';
+import 'package:logging/logging.dart';
 
 class RollbarRequest {
   String _accessToken;
@@ -9,11 +14,11 @@ class RollbarRequest {
   RollbarRequest(this._accessToken, this._data, this._logger, this._client);
 
   Future<Response> send() {
-    var json = json.encode({"access_token": _accessToken, "data": _data});
+    var jsonMap = json.encode({"access_token": _accessToken, "data": _data});
 
     var request = _client.post("https://api.rollbar.com/api/1/item/",
         headers: {"Content-Type": "application/json"},
-        body: json);
+        body: jsonMap);
 
     return request
         ..then((response) => _logStatus(response))
