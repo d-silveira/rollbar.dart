@@ -95,9 +95,12 @@ class Rollbar {
     };
 
     if (otherData != null) {
-      data = deepMerge(data, otherData);
+//      data = deepMerge(data, otherData);
+      otherData.addAll(data);
     }
 
-    return deepMerge(_config, data);
+//    return deepMerge(_config, data);
+    data.addAll(_config);
+    return data;
   }
 }
