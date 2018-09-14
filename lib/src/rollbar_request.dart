@@ -1,8 +1,4 @@
-import 'dart:async';
-import 'dart:convert';
-
-import 'package:http/http.dart';
-import 'package:logging/logging.dart';
+part of rollbar;
 
 class RollbarRequest {
   String _accessToken;
