@@ -6,13 +6,15 @@ class Rollbar {
   Logger _logger;
   Client _client;
 
-  Rollbar(this._accessToken, String environment, {Map<String, Object> config, Logger logger, Client client}) {
+  Rollbar(this._accessToken, String platform, String environment, {Map<String, Object> config, Logger logger, Client client}) {
     _logger = logger != null ? logger : _defaultLogger;
     _client = client != null ? client : new IOClient();
 
     _config = config != null ? config : <String, Object>{};
     _config.addAll(<String, Object>{
+      "platform": platform,
       "environment": environment,
+      "language": "dart",
       "notifier": {
         "name": "rollbar.dart",
         "version": "0.0.1"
