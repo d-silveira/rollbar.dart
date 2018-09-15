@@ -13,6 +13,7 @@ class Rollbar {
     _config = config != null ? config : <String, Object>{};
     _config.addAll(<String, Object>{
       "platform": platform,
+      "framework": platform,
       "environment": environment,
       "language": "dart",
       "notifier": {
