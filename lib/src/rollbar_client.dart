@@ -2,16 +2,16 @@ part of rollbar;
 
 class Rollbar {
   String _accessToken;
-  Map<dynamic, dynamic> _config;
+  Map<String, Object> _config;
   Logger _logger;
   Client _client;
 
-  Rollbar(this._accessToken, String environment, {Map<dynamic, dynamic> config, Logger logger, Client client}) {
+  Rollbar(this._accessToken, String environment, {Map<String, Object> config, Logger logger, Client client}) {
     _logger = logger != null ? logger : _defaultLogger;
     _client = client != null ? client : new IOClient();
 
-    _config = config != null ? config : {};
-    _config.addAll({
+    _config = config != null ? config : <String, Object>{};
+    _config.addAll(<String, Object>{
       "environment": environment,
       "notifier": {
         "name": "rollbar.dart",
@@ -20,8 +20,8 @@ class Rollbar {
     });
   }
 
-  Future<Response> trace(Object error, StackTrace stackTrace, {Map<dynamic, dynamic> otherData}) {
-    var body = {
+  Future<Response> trace(Object error, StackTrace stackTrace, {Map<String, Object> otherData}) {
+    Map<String, Object> body = <String, Object>{
       "trace": {
         "frames": new Trace.from(stackTrace).frames.map((frame) {
           return {
@@ -38,22 +38,22 @@ class Rollbar {
       }
     };
 
-    var data = _generatePayloadData(body, otherData);
+    Map<String, Object> data = _generatePayloadData(body, otherData);
     return new RollbarRequest(_accessToken, data, _logger, _client).send();
   }
 
-  Future<Response> message(String messageBody, {Map<dynamic, dynamic> metadata, Map<dynamic, dynamic> otherData}) {
-    var body = {
+  Future<Response> message(String messageBody, {Map<String, Object> metadata, Map<String, Object> otherData}) {
+    Map<String, Object> body = <String, Object> {
       "message": {
         "body": messageBody
       }
     };
 
     if (metadata != null) {
-      body["message"].addAll(metadata);
+      body["message"] = metadata;
     }
 
-    var data = _generatePayloadData(body, otherData);
+    Map<String, Object> data = _generatePayloadData(body, otherData);
     return new RollbarRequest(_accessToken, data, _logger, _client).send();
   }
 
@@ -68,7 +68,7 @@ class Rollbar {
   /// each error reported to Rollbar. The futures can be used to listen for completion
   /// or errors while calling the Rollbar API. The stream will also contain any uncaught
   /// errors originating from the zone. Use [Stream.handleError] to process these errors.
-  Stream<Future<Response>> traceErrorsInZone(body(), {Map<dynamic, dynamic> otherData(error, StackTrace trace)}) {
+  Stream<Future<Response>> traceErrorsInZone(body(), {Map<String, Object> otherData(error, StackTrace trace)}) {
     var errors = new StreamController.broadcast();
 
     runZoned(body, onError: (error, stackTrace) {
@@ -87,8 +87,8 @@ class Rollbar {
     return errors.stream;
   }
 
-  Map<dynamic, dynamic> _generatePayloadData(Map body, Map otherData) {
-    var data = {
+  Map<String, Object> _generatePayloadData(Map<String, Object> body, Map<String, Object> otherData) {
+    Map<String, Object> data = <String, Object>{
       "body": body,
       "timestamp": new DateTime.now().millisecondsSinceEpoch / 1000,
       "language": "dart"

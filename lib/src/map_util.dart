@@ -1,7 +1,7 @@
 library rollbar.map_util;
 
-Map<dynamic, dynamic> deepMerge(Map<dynamic, dynamic> first, Map<dynamic, dynamic> second) {
-  var result = {};
+Map<String, Object> deepMerge(Map<String, Object> first, Map<String, Object> second) {
+  Map<String, Object> result = {};
   new List()..addAll(first.keys)..addAll(second.keys)..forEach((key) {
     if (first.containsKey(key) && !second.containsKey(key)) {
       result[key] = first[key];
